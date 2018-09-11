@@ -1,0 +1,14 @@
+<script>
+    function ping(){
+       $.ajax({
+          url: 'http://192.168.0.69:echo',
+          success: function(result){
+             alert('reply');
+          },     
+          error: function(result){
+              alert('timeout/error');
+          }
+       });
+       ping();
+    }
+</script>
