@@ -1,14 +1,29 @@
 <script>
-    function ping(){
-       $.ajax({
-          url: 'http://192.168.0.69:echo',
-          success: function(result){
-             alert('reply');
-          },     
-          error: function(result){
-              alert('timeout/error');
-          }
-       });
-       ping();
+    function ping(host, port, pong) {
+
+  var started = new Date().getTime();
+
+  var http = new XMLHttpRequest();
+
+  http.open("GET", "http://" + host + ":" + port, /*async*/true);
+  http.onreadystatechange = function() {
+    if (http.readyState == 4) {
+      var ended = new Date().getTime();
+
+      var milliseconds = ended - started;
+
+      if (pong != null) {
+        pong(milliseconds);
+      }
     }
+  };
+  try {
+    http.send(null);
+  } catch(exception) {
+    // this is expected
+  }
+
+}
+    
+    ping("https://apple.com", "77", function(m){ console.log("It took "+m+" miliseconds."); });
 </script>
